@@ -5,36 +5,59 @@
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.0.20+-green.svg)](https://langchain.com/langgraph)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🎯 The Problem
+## 📋 Overview
 
-**After spending countless hours repeating the same machine learning workflow for different datasets, I decided to build an AI-powered system that automates the complete tabular classification pipeline.**
+An **Autonomous Data Science Agent** that provides an end-to-end machine learning workflow for tabular classification and regression problems. Built with Streamlit, LangChain, and LangGraph, this application orchestrates multiple specialized agents to automate the entire data science pipeline from data cleaning to model selection.
 
-As data scientists and machine learning practitioners, we often face a frustrating reality:
+## 🎯 Architecture & Workflow
 
-### 😫 Pain Points
+### System Architecture
 
 ```mermaid
-graph TD
-    A[Manual ML Workflow Pain Points] --> B[🕐 Time-Consuming]
-    A --> C[🔄 Repetitive Tasks]
-    A --> D[📊 Data Quality Issues]
-    A --> E[🧪 Model Selection Overwhelm]
-    A --> F[📈 Visualization Complexity]
+graph TB
+    subgraph "Frontend Layer"
+        UI[Streamlit UI]
+        UPLOAD[File Upload]
+        DISPLAY[Results Display]
+    end
     
-    B --> B1[70% time spent on data cleaning]
-    B --> B2[Days of feature engineering]
+    subgraph "Orchestration Layer"
+        LG[LangGraph Workflow]
+        GRAPH[graph.py]
+    end
     
-    C --> C1[Same steps for each dataset]
-    C --> C2[Copy-paste code frustration]
+    subgraph "Agent Layer"
+        EDA[EDA Agent<br/>eda_agent.py]
+        CLEAN[Cleaning Agent<br/>cleaning_agent.py]
+        FEAT[Feature Agent<br/>feature_agent.py]
+        MODEL[Model Agent<br/>model_agent.py]
+    end
     
-    D --> D1[Missing values handling]
-    D --> D2[Outlier detection]
-    D --> D3[Data inconsistency]
+    subgraph "Core Modules"
+        VIZ[Visualization<br/>src/visualization]
+        FE[Feature Engineering<br/>src/feature_engineering]
+        MS[Model Selection<br/>src/model_selection]
+        CLEAN2[Cleaning Pipeline<br/>src/cleaning]
+    end
     
-    E --> E1[Which model to choose?]
-    E --> E2[Hyperparameter tuning]
-    E --> E3[Cross-validation setup]
+    subgraph "Support Layer"
+        PROMPTS[System Prompts<br/>prompts/system_prompts.py]
+        TOOLS[Tools<br/>src/tools]
+    end
     
-    F --> F1[Creating meaningful charts]
-    F --> F2[Explaining data patterns]
-    F --> F3[Reporting insights]
+    UI --> LG
+    LG --> EDA
+    LG --> CLEAN
+    LG --> FEAT
+    LG --> MODEL
+    
+    EDA --> VIZ
+    CLEAN --> CLEAN2
+    FEAT --> FE
+    MODEL --> MS
+    
+    CLEAN --> PROMPTS
+    FEAT --> PROMPTS
+    MODEL --> PROMPTS
+    
+    MODEL --> TOOLS
