@@ -5,6 +5,10 @@
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.0.20+-green.svg)](https://langchain.com/langgraph)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## 🎯 The Problem
+
+**After spending countless hours repeating the same machine learning workflow for different datasets, I decided to build an AI-powered system that automates the complete tabular classification pipeline.**
+
 ## 📋 Overview
 
 An **Autonomous Data Science Agent** that provides an end-to-end machine learning workflow for tabular classification and regression problems. Built with Streamlit, LangChain, and LangGraph, this application orchestrates multiple specialized agents to automate the entire data science pipeline from data cleaning to model selection.
