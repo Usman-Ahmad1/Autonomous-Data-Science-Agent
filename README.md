@@ -2,32 +2,62 @@
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28.0+-red.svg)](https://streamlit.io/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-0.0.20+-green.svg)](https://langchain.com/langgraph)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 📋 Overview
 
-An **Autonomous Data Science Agent** that provides an end-to-end machine learning workflow for tabular classification and regression problems. Built with Streamlit, LangChain, and LangGraph, this application automates the entire data science pipeline from data cleaning to model selection.
+An **Autonomous Data Science Agent** that provides an end-to-end machine learning workflow for tabular classification and regression problems. Built with Streamlit, LangChain, and LangGraph, this application orchestrates multiple specialized agents to automate the entire data science pipeline from data cleaning to model selection.
 
-### ✨ Key Features
+## 🎯 Architecture & Workflow
 
-- **📊 Data Upload & Exploration** - Support for CSV and Excel files with automatic data profiling
-- **🧹 Automated Data Cleaning** - Missing value handling, outlier detection, duplicate removal
-- **🔧 Feature Engineering** - Create interactions, ratios, polynomial features, scaling, and encoding
-- **📈 Interactive Visualizations** - 10+ chart types with automatic suggestions based on data
-- **🤖 Model Selection** - Automated testing of multiple ML models with performance comparison
-- **📋 Comprehensive Reporting** - Detailed logs and reports for every step
-- **🎨 Interactive UI** - User-friendly interface with real-time feedback
+### System Architecture
 
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.8 or higher
-- Git
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/autonomous-data-science-agent.git
-cd autonomous-data-science-agent
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        UI[Streamlit UI]
+        UPLOAD[File Upload]
+        DISPLAY[Results Display]
+    end
+    
+    subgraph "Orchestration Layer"
+        LG[LangGraph Workflow]
+        GRAPH[graph.py]
+    end
+    
+    subgraph "Agent Layer"
+        EDA[EDA Agent<br/>eda_agent.py]
+        CLEAN[Cleaning Agent<br/>cleaning_agent.py]
+        FEAT[Feature Agent<br/>feature_agent.py]
+        MODEL[Model Agent<br/>model_agent.py]
+    end
+    
+    subgraph "Core Modules"
+        VIZ[Visualization<br/>src/visualization]
+        FE[Feature Engineering<br/>src/feature_engineering]
+        MS[Model Selection<br/>src/model_selection]
+        CLEAN2[Cleaning Pipeline<br/>src/cleaning]
+    end
+    
+    subgraph "Support Layer"
+        PROMPTS[System Prompts<br/>prompts/system_prompts.py]
+        TOOLS[Tools<br/>src/tools]
+    end
+    
+    UI --> LG
+    LG --> EDA
+    LG --> CLEAN
+    LG --> FEAT
+    LG --> MODEL
+    
+    EDA --> VIZ
+    CLEAN --> CLEAN2
+    FEAT --> FE
+    MODEL --> MS
+    
+    CLEAN --> PROMPTS
+    FEAT --> PROMPTS
+    MODEL --> PROMPTS
+    
+    MODEL --> TOOLS
