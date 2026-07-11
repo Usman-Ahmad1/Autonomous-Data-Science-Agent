@@ -7,7 +7,7 @@
 
 ## 🎯 The Problem
 
-**After spending countless hours repeating the same machine learning workflow for different datasets, I decided to build an AI-powered system that automates the complete tabular classification pipeline.**
+**After spending countless hours repeating the same machine learning workflow for different datasets, Decided to build an AI-powered system that automates the complete tabular classification and Regression pipeline.**
 
 ## 📋 Overview
 
